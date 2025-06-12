@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Pane</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />  </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            user-select: none;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+input::placeholder {
+  font-weight: bold;
+  opacity: 0.5;
+  color: white;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  height: fit-content !important;
+}
+
+/* Better responsive breakpoints */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+}
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 30px;
+            transition: all 0.3s ease;
+            width: 10rem;
+            height: 10rem;
+            position: relative;
+            display: block;
+            flex-direction: column;
+            justify-content: space-between;
+            line-clamp: 2 !important;
+            overflow: hidden;
+        }
+
+        .glass-card * {
+            user-select: none;
+            pointer-events: none;
+        }
+        
+        .glass-card label {
+            display: block;
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-top: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .glass-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px 0 rgba(31, 38, 135, 0.5);
+        }
+
+        .glass-card h2 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .glass-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* Dark Glass Variant */
+        .glass-card.dark {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card.frosted {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Navigation Glass */
+        .glass-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            z-index: 5;
+            overflow: scroll !important;
+            scrollbar-width: none;
+        }
+
+   
+
+        .glass-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .glass-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Button Glass */
+        .glass-button {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 12px 30px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Input Glass */
+        .glass-input {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            color: white;
+            font-size: 1rem;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        #searchbox {
+            transition: width 0.3s ease;
+         width: 300px;
+         height: 50px;
+         background: none;
+         border: none;
+         color: white;
+         margin: 0;
+        }
+
+        .glass-input:focus {
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .glass-nav {
+                position: relative;
+                top: 0;
+                left: 0;
+                transform: none;
+                margin-bottom: 30px;
+            }
+            
+            .glass-nav ul {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+        .content {
+  position: relative;
+  z-index: 2;
+}
+
+img{
+    width: 75% !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    #searchnav{
+        cursor: text;
+    }
+
+    .loadingOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .loadingOverlay * {
+        margin: 10px;
+    }
+
+    #side * {
+        width: 100%;
+    }
+
+#side {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#side.menu-visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+    </style>
+</head>
+<body>
+    <div class="loadingOverlay">
+     <div style="text-align: center;">
+           <h2 style="color: white;">Indexing Apps...</h2>
+        <h4 style="color: white;">This may take a minute, depending on the number of apps installed.</h4>
+                <button style="width: 100%;display: none;" id="startOver" class="glass-button" href="#" onclick="window.electron.deleteCache()">Taking too long? Click here to delete the cache and reopen the app.</button>
+     </div>
+    </div>
+        <div class="blur-overlay"></div>
+    <div class="content">
+    <nav class="glass-nav" id="searchnav">
+        <ul>
+            <input id="searchbox" type="text" placeholder="Search..." class="glass-button" />
+                 <button class="glass-button material-symbols-outlined" style="margin: 0;font-size: 1.5rem;" onclick="toggleMenu()">Settings</button>
+        </ul>
+    </nav>
+        <p style="color: white;margin-top: 100px;margin-left: 30px;font-size: 1.2rem;font-weight: bold;">Pinned Apps</p>
+    
+        <div class="container" id="pinned" ondrop="drop(event)" ondragover="dragover(event)">
+            <p style="color: white;font-size: 1.1rem;font-weight: bold;text-align: center;" id="pinnedhelp">Drag and drop or right-click an app to pin it here.</p>
+        </div>
+    </div>
+            <p style="color: white;margin-top: 10px;margin-left: 30px;font-size: 1.2rem;font-weight: bold;">All Apps</p>
+
+
+    <div class="container" id="allapps" ondrop="drop(event)" ondragover="dragover(event)">
+
+    </div>
+    </div>
+
+  <label style="color: white;font-size: 0.9rem;margin: 10px;text-align: center;width: 100%;">
+ Press any letter key to scroll to the first app starting with that letter, Ctrl to toggle the menu, and Tab to focus the search box.<br>
+    <br><br>
+  </label>
+
+ <div class="glass-nav" id="side" style="bottom: 0;left: 1%;display: none;background: rgba(107, 107, 107, 0.8);"><br>
+    <h3 style="color: white;text-align: center;">Customize</h3>
+    <select class="glass-button" id="mode" onchange="setMode(this.value)">
+        <option value="frosted">Frosted Glass</option>
+        <option value="dark">Dark Glass</option>
+        <option value="light">Light Glass</option>
+    </select>
+            <button class="glass-button" onclick="setBg()">Background</button>
+        <button class="glass-button" onclick="setTc()">Text Color</button>
+        <h3 style="color: white;text-align: center;">Actions</h3>
+        <button class="glass-button" onclick="window.electron.updateApps()">Update List</button>
+    <button class="glass-button" id="reindex">Reindex Apps</button>
+        <button class="glass-button" onclick="window.electron.deleteCache()">Delete Cache</button>
+                <h3 style="color: white;text-align: center;">Reorder</h3>
+        <button class="glass-button" onclick="window.electron.reorder('az')">A-Z</button>
+        <button class="glass-button" onclick="window.electron.reorder('za')">Z-A</button>
+        <h3 style="color: white;text-align: center;">Quit</h3>
+        <button class="glass-button" onclick="toggleMenu()">Hide Menu</button>
+    <button class="glass-button" onclick="window.electron.quit()">Quit App</button>
+ </div>
+</body>
+</html>
+
+<script>
+let isSearching = false;
+
+document.getElementById('searchbox').addEventListener('focus', function() {
+    this.style.width = '500px';
+    isSearching = true;
+});
+document.getElementById('searchbox').addEventListener('blur', function() {
+    this.style.width = '300px';
+    isSearching = false;
+});
+
+
+function dragStart(ev) {
+  // Find the card element (could be dragging from img or label)
+  let cardElement = ev.target;
+  while (cardElement && !cardElement.classList.contains('glass-card')) {
+    cardElement = cardElement.parentNode;
+  }
+  
+  if (cardElement && cardElement.id) {
+    cardElement.classList.add('dragging');
+    ev.dataTransfer.setData("text", cardElement.id);
+    ev.dataTransfer.dropEffect = "move";
+  }
+}
+function dragover(ev) {
+  ev.preventDefault(); // Prevent default behavior to allow dropping.
+}
+
+class Card {
+    constructor(app, appIconCachePath) {
+    const card = document.createElement('div');
+
+    if(document.getElementById(app.id)) {
+        document.getElementById(app.id).remove();
+    }
+
+    card.title = app.name;
+
+    const img = document.createElement('img');
+    img.src = `file://${appIconCachePath}/${app.icon_path}`;
+    img.style.width = '100%';
+    img.style.borderRadius = '15px';
+    
+    card.className = `glass-card ${localStorage.getItem('mode') || 'frosted'}`;
+    card.id = app.id;
+    card.style.cursor = 'pointer';
+
+    if(app.hidden) {
+        card.style.display = 'none';
+    }
+
+    const label = document.createElement('label');
+    label.textContent = app.name;
+
+    label.style.color = localStorage.getItem('textColor') || 'white';
+
+    card.appendChild(img);
+    card.appendChild(label);
+
+    card.setAttribute('data', JSON.stringify(app));
+
+
+    card.draggable = true;
+    card.ondragstart = (event) => {
+        dragStart(event);
+    };
+    
+    card.onclick = () => {
+        window.electron.openApp(app.path);
+    };
+
+    card.oncontextmenu = (e) => {
+        e.preventDefault();
+        window.electron.showInFinder(app.path);
+    };
+
+
+    if(app.pinned && document.getElementById('pinnedhelp')) document.getElementById('pinnedhelp').style.display = 'none';
+
+    if (document.getElementById('pinned').children.length === 0) {
+       document.getElementById('pinnedhelp').style.display = 'block';
+    }
+
+    (app.pinned ? document.getElementById('pinned') : document.getElementById('allapps')).appendChild(card);
+
+    }
+
+}
+
+async function drop(ev) {
+  ev.preventDefault();
+  const data = ev.dataTransfer.getData("text");
+  const droppedElement = document.getElementById(data);
+  
+  if (!droppedElement) return; // Safety check
+  
+  let targetCard = ev.target;
+  while (targetCard && !targetCard.classList?.contains('glass-card')) {
+    targetCard = targetCard.parentNode;
+  }
+
+  
+  if (targetCard && targetCard !== droppedElement) {
+      const container = targetCard.parentNode;
+                if (container.contains(targetCard)) {
+                    container.insertBefore(droppedElement, targetCard.nextSibling);
+                }
+    
+    container.insertBefore(droppedElement, targetCard);
+
+    // emit a new order
+    window.electron.updateOrder([
+        ...Array.from(document.getElementById('pinned').children).map(card => card.id),
+        ...Array.from(document.getElementById('allapps').children).map(card => card.id)
+    ]);
+
+  }
+
+    if (ev.target.id === 'pinned') {
+        window.electron.pinApp(droppedElement.id);
+        new Card({
+            ...JSON.parse(droppedElement.getAttribute('data')),
+            pinned: true
+        }, await window.electron.iconPath());
+    } else if (ev.target.id === 'allapps') {
+        window.electron.unpinApp(droppedElement.id);
+        new Card({
+            ...JSON.parse(droppedElement.getAttribute('data')),
+            pinned: false
+        }, await window.electron.iconPath());
+    }
+
+  droppedElement.classList.remove('dragging');
+}
+
+
+window.onload = async () => {
+let apps = await window.electron.apps()
+const appIconCachePath = await window.electron.iconPath();
+const container = document.querySelector('#allapps');
+document.querySelector('.loadingOverlay').style.display = 'none';
+
+
+apps.forEach((app,i) => {
+new Card(app, appIconCachePath);
+});
+
+const searchBox = document.getElementById('searchbox');
+searchBox.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.glass-card');
+    
+    cards.forEach(card => {
+        const label = card.querySelector('label').textContent.toLowerCase();
+        if(searchTerm === '') {
+            card.style.display = 'block';
+            const app = JSON.parse(card.getAttribute('data'));
+                if(app.hidden) {
+        card.style.display = 'none';
+            }
+            isSearching = false;
+            return;
+        }
+        isSearching = true;
+        if (label.includes(searchTerm)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+
+}
+
+document.getElementById('reindex').addEventListener('click', async () => {
+    const apps = await window.electron.reIndex()
+});
+
+
+const toggleMenu = () => {
+    const sideMenu = document.getElementById('side');
+    
+    if (sideMenu.classList.contains('menu-visible')) {
+        sideMenu.classList.remove('menu-visible');
+        // Hide after animation completes
+        setTimeout(() => {
+            sideMenu.style.display = 'none';
+        }, 300);
+    } else {
+        sideMenu.style.display = 'block';
+        // Trigger animation on next frame
+        requestAnimationFrame(() => {
+            sideMenu.classList.add('menu-visible');
+        });
+    }
+}
+window.addEventListener('scroll', () => {
+    const searchNav = document.getElementById('searchnav');
+    if (window.scrollY > 100) {
+        searchNav.style.display = 'none';
+    } else {
+        searchNav.style.display = 'block';
+    }
+});
+
+const setMode = (mode) => {
+    const cards = document.querySelectorAll('.glass-card');
+    cards.forEach(card => {
+        card.className = `glass-card ${mode}`;
+    });
+    localStorage.setItem('mode', mode);
+}
+
+const setBg = async () => {
+    const bg = await window.electron.prompt('Change Background','Enter any CSS value or color. Leave empty to reset to default.');
+    if (bg) {
+        document.body.style.background = bg;
+        localStorage.setItem('background', bg);
+    } else {
+        document.body.style.background = 'none';
+        localStorage.removeItem('background');
+    }
+}
+
+const setTc = async () => {
+    const color = await window.electron.prompt('Change Text Color','Enter a valid CSS value or color. Leave empty to reset to default.');
+    if (color) {
+        document.querySelectorAll('.glass-card label').forEach(label => {
+            label.style.color = color;
+        });
+        localStorage.setItem('textColor', color);
+    } else {
+        document.querySelectorAll('.glass-card label').forEach(label => {
+            label.style.color = 'white';
+        });
+        localStorage.removeItem('textColor');
+    }
+}
+
+document.getElementById('mode').value = localStorage.getItem('mode') || 'frosted';
+
+if (localStorage.getItem('background')) {
+    document.body.style.background = localStorage.getItem('background');
+} 
+
+
+window.electron.onNewAppPinned(async app => {
+    console.log('New app pinned:', app);
+    new Card(app, await window.electron.iconPath());
+})
+
+window.electron.onNewAppHidden(async app => {
+    console.log('App hidden:', app);
+    const card = document.getElementById(app);
+    if (card) {
+        card.style.display == 'none' ? card.style.display = 'block' : card.style.display = 'none';
+    }
+});
+
+
+document.addEventListener('keydown',
+    (event) => {
+        if (isSearching) return;
+        const key = event.key.toLowerCase();
+        if (key.length === 1 && /^[a-z0-9]$/.test(key)) {
+            const allApps = document.querySelectorAll('#allapps .glass-card');
+            for (const app of allApps) {
+                const label = app.querySelector('label').textContent.toLowerCase();
+                if (label.startsWith(key)) {
+                    app.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    break;
+                }
+            }
+        }
+    }
+);
+
+document.addEventListener('keydown', (event) => {
+    if (event.ctrlKey) {
+        toggleMenu();
+    }
+});
+
+document.addEventListener('contextmenu', (event) => {
+    const target = event.target;
+    if (!target.classList.contains('glass-card')) {
+        event.preventDefault();
+        window.electron.rightClick(event.clientX, event.clientY);
+    }
+});
+
+// show #startOver after 30 seconds
+setTimeout(() => {
+    document.getElementById('startOver').style.display = 'block';
+}, 30000);
+</script>
